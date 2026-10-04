@@ -1,102 +1,111 @@
-"use client";
-
-import { motion, type Variants } from "framer-motion";
+import { ArrowDown } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import type { CSSProperties } from "react";
+import { heroContent } from "@/data/site";
 
-const HEADLINE_WORDS = ["İç", "mekâna", "kimlik", "kazandırıyoruz."];
+const delay = (ms: number) => ({ "--delay": `${ms}ms` }) as CSSProperties;
 
-const wordVariants: Variants = {
-  hidden: { y: "100%", opacity: 0 },
-  visible: (i: number) => ({
-    y: "0%",
-    opacity: 1,
-    transition: {
-      duration: 0.85,
-      delay: 0.35 + i * 0.08,
-      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-    },
-  }),
-};
+/*
+ * Composition: the photograph fills the frame from the top-right and leaves a
+ * dark margin on the left (desktop) and a dark strip at the bottom. The
+ * headline starts in the margin and its last line straddles the photo's
+ * bottom edge, tying type and image together.
+ */
+export function Hero() {
+  const { lines, description, cta, image, meta, caption } = heroContent;
 
-export default function Hero() {
   return (
-    <section className="relative h-[100svh] w-full overflow-hidden grain">
-      <motion.div
-        initial={{ opacity: 0, scale: 1.04 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute inset-0"
-      >
-        <Image
-          src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1920&q=80"
-          alt="Sıcak ışıkla aydınlanmış, doğal malzemeli modern iç mekân"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
+    <section
+      data-theme="dark"
+      aria-labelledby="hero-title"
+      className="relative isolate h-[100svh] min-h-[40rem] overflow-hidden [--strip:clamp(15rem,36svh,19rem)] lg:min-h-[44rem] lg:[--strip:clamp(10rem,27svh,15rem)]"
+    >
+      <figure className="grain absolute inset-x-0 top-0 bottom-[var(--strip)] -z-10 overflow-hidden lg:left-[22%]">
+        <div className="animate-settle absolute inset-0">
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            preload
+            quality={80}
+            sizes="(min-width: 1024px) 78vw, 100vw"
+            className="object-cover object-[32%_50%] lg:object-center"
+          />
+        </div>
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[linear-gradient(180deg,rgb(18_28_40/0.6)_0%,rgb(18_28_40/0.15)_30%,rgb(18_28_40/0.35)_55%,rgb(18_28_40/0.75)_100%)] lg:bg-[linear-gradient(90deg,rgb(18_28_40/0.55)_0%,rgb(18_28_40/0)_35%),linear-gradient(180deg,rgb(18_28_40/0.45)_0%,rgb(18_28_40/0)_30%,rgb(18_28_40/0)_60%,rgb(18_28_40/0.55)_100%)]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-ink)] via-[var(--color-ink)]/25 to-[var(--color-ink)]/10" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-ink)]/50 via-transparent to-transparent" />
-      </motion.div>
+        <figcaption className="animate-fade t-label absolute bottom-4 right-[var(--gutter)] hidden text-paper/70 sm:block" style={delay(700)}>
+          {caption}
+        </figcaption>
+      </figure>
 
-      <div className="relative z-10 flex h-full flex-col justify-end container-edge pb-20 md:pb-24 text-[var(--color-paper)]">
-        <motion.span
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="text-eyebrow text-[var(--color-paper)]/70 mb-6"
+      <div aria-hidden className="container-arch pointer-events-none absolute inset-0 -z-10">
+        <div className="arch-grid-faint h-full text-paper" />
+      </div>
+
+      <div className="container-arch relative h-full">
+        <ul
+          className="animate-fade absolute left-[var(--gutter)] top-[calc(var(--header-h)+3rem)] hidden w-[16%] border-t border-paper/20 text-paper/75 lg:block"
+          style={delay(450)}
         >
-          Yunus Mimarlık — İç Mimarlık Atölyesi, Tokat
-        </motion.span>
+          {meta.map((item, index) => (
+            <li key={item} className="t-label flex justify-between gap-3 border-b border-paper/20 py-3">
+              <span>{item}</span>
+              <span className="t-num text-paper/40">{String(index + 1).padStart(2, "0")}</span>
+            </li>
+          ))}
+        </ul>
 
-        <h1 className="font-display font-light text-huge max-w-4xl flex flex-wrap gap-x-[0.22em]">
-          {HEADLINE_WORDS.map((word, i) => (
-            <span key={word} className="overflow-hidden inline-block pb-[0.1em]">
-              <motion.span
-                custom={i}
-                initial="hidden"
-                animate="visible"
-                variants={wordVariants}
-                className="inline-block"
-              >
-                {word}
-              </motion.span>
+        <p
+          className="animate-fade t-label absolute left-[var(--gutter)] top-[calc(var(--header-h)+1.25rem)] text-paper/80 lg:hidden"
+          style={delay(450)}
+        >
+          {meta[1]} — Mimarlık & İç Mimarlık
+        </p>
+
+        <h1
+          id="hero-title"
+          className="absolute left-[var(--gutter)] right-[var(--gutter)] bottom-[calc(var(--strip)-0.44em)] font-display font-semibold uppercase leading-[0.86] tracking-[-0.04em] text-paper [font-stretch:84%] text-[clamp(3rem,13.2vw,9.75rem)] lg:text-[clamp(4.5rem,8.6vw,10.5rem)]"
+        >
+          {lines.map((line, index) => (
+            <span key={line} className="mask-line">
+              <span className="animate-rise" style={delay(index * 110)}>
+                {line}
+              </span>
             </span>
           ))}
         </h1>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.85, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-8 flex flex-col md:flex-row md:items-center gap-6 md:gap-10"
-        >
-          <p className="text-sm tracking-wide text-[var(--color-paper)]/80">
-            İç Mimari &nbsp;·&nbsp; Stil Danışmanlığı &nbsp;·&nbsp; Malzeme Küratörlüğü &nbsp;·&nbsp; Uygulama
-          </p>
-          <div className="flex gap-6 text-sm">
-            <Link href="/projeler" className="group inline-flex items-center gap-2">
-              Projeleri Keşfet
-              <span className="transition-transform duration-300 group-hover:translate-x-1">
-                →
-              </span>
-            </Link>
-            <Link href="/iletisim" className="group inline-flex items-center gap-2">
-              Bir Projeniz mi Var?
-              <span className="transition-transform duration-300 group-hover:translate-x-1">
-                →
-              </span>
-            </Link>
+        <div className="absolute inset-x-[var(--gutter)] bottom-0 flex h-[var(--strip)] flex-col justify-between pb-5 pt-[clamp(2.25rem,5svh,3.25rem)] md:pt-16 lg:pb-7 lg:pt-6">
+          <div className="grid-arch">
+            <div
+              className="animate-fade col-span-4 md:col-span-6 md:col-start-7 lg:col-span-4 lg:col-start-8 xl:col-span-3 xl:col-start-9"
+              style={delay(550)}
+            >
+              <p className="text-[1rem] leading-relaxed text-paper/80 lg:text-[1.0625rem]">{description}</p>
+              <a href={cta.href} className="group t-label mt-4 inline-flex min-h-11 items-center gap-3 text-paper">
+                <span className="link-line pb-0.5">{cta.label}</span>
+                <ArrowDown aria-hidden className="arrow-nudge-down size-4" strokeWidth={1.5} />
+              </a>
+            </div>
           </div>
-        </motion.div>
-      </div>
 
-      <div className="absolute bottom-8 right-8 z-10 hidden md:flex flex-col items-center gap-3 text-[var(--color-paper)]/55">
-        <span className="text-[10px] tracking-[0.2em] [writing-mode:vertical-rl]">
-          SCROLL
-        </span>
-        <span className="h-10 w-px bg-[var(--color-paper)]/50" />
+          <div
+            className="animate-fade flex items-end justify-between gap-6 border-t border-paper/15 pt-3 text-paper/60"
+            style={delay(750)}
+          >
+            <p className="t-label">{meta[2]} & {meta[3]}</p>
+            <p className="t-label hidden items-center gap-3 md:flex">
+              <span aria-hidden className="relative block h-6 w-px overflow-hidden bg-paper/20">
+                <span className="scroll-cue absolute inset-0 bg-paper" />
+              </span>
+              Aşağı kaydırın
+            </p>
+            <p className="t-label t-num">Bölüm / A</p>
+          </div>
+        </div>
       </div>
     </section>
   );

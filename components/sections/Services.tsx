@@ -1,60 +1,34 @@
-"use client";
-
-import { useState } from "react";
-import Image from "next/image";
+import { MaskText, Reveal } from "@/components/animations/Reveal";
+import { ServicesAccordion } from "@/components/sections/ServicesAccordion";
+import { ArrowLink } from "@/components/ui/ArrowLink";
+import { SectionLabel } from "@/components/ui/SectionLabel";
 import { services } from "@/data/services";
-import RevealOnScroll from "@/components/ui/RevealOnScroll";
 
-export default function Services() {
-  const [hovered, setHovered] = useState<number | null>(null);
-  const preview = hovered !== null ? services[hovered] : services[0];
-
+export function Services() {
   return (
-    <section id="hizmetler" className="relative py-24 md:py-32 container-edge">
-      <RevealOnScroll className="mb-14">
-        <span className="text-eyebrow block mb-4">Hizmetler</span>
-        <h2 className="font-display font-light text-4xl md:text-6xl max-w-xl">
-          Fikirden teslime, tek elden.
-        </h2>
-      </RevealOnScroll>
+    <section id="hizmetler" data-theme="graphite" aria-labelledby="services-title" className="relative">
+      <div className="container-arch section-y">
+        <SectionLabel index="02" en="Services" rule>
+          Hizmetler
+        </SectionLabel>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-        <div className="lg:col-span-7 border-t border-[var(--color-ink)]/15">
-          {services.map((service, i) => (
-            <div
-              key={service.index}
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(null)}
-              className="group flex items-center justify-between border-b border-[var(--color-ink)]/15 py-7 md:py-9"
-            >
-              <div className="flex items-baseline gap-6 md:gap-10">
-                <span className="text-eyebrow w-8">{service.index}</span>
-                <h3 className="font-display text-3xl md:text-5xl transition-colors duration-300 group-hover:text-[var(--color-bronze)]">
-                  {service.title}
-                </h3>
-              </div>
-            </div>
-          ))}
+        <div className="grid-arch mt-10 items-end gap-y-8 md:mt-14">
+          <h2 id="services-title" className="t-display col-span-4 md:col-span-8">
+            <MaskText lines={["UZMANLIK", "ALANLARIMIZ"]} />
+          </h2>
+          <Reveal className="col-span-4 md:col-span-4 lg:col-span-3 lg:col-start-10">
+            <p className="text-muted">
+              Arsa analizinden anahtar teslimine; mimari ve iç mimariyi aynı ekip, aynı dil ve aynı sorumlulukla
+              yürütüyoruz.
+            </p>
+            <ArrowLink href="/hizmetler" className="mt-6">
+              Hizmet detayları
+            </ArrowLink>
+          </Reveal>
         </div>
 
-        <div className="hidden lg:block lg:col-span-5 sticky top-28">
-          <div className="relative aspect-[4/5] overflow-hidden">
-            {services.map((service) => (
-              <Image
-                key={service.index}
-                src={service.image}
-                alt={service.title}
-                fill
-                sizes="40vw"
-                className={`object-cover transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                  preview.index === service.index ? "opacity-100" : "opacity-0"
-                }`}
-              />
-            ))}
-          </div>
-          <p className="mt-5 text-sm text-[var(--color-stone)] leading-relaxed max-w-sm">
-            {preview.description}
-          </p>
+        <div className="mt-16 md:mt-24">
+          <ServicesAccordion services={services} />
         </div>
       </div>
     </section>

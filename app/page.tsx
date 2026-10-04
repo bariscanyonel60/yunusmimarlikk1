@@ -1,37 +1,29 @@
-import Hero from "@/components/sections/Hero";
-import Intro from "@/components/sections/Intro";
-import Press from "@/components/sections/Press";
-import ProjectsSection from "@/components/sections/ProjectsSection";
-import MaterialsPalette from "@/components/sections/MaterialsPalette";
-import BeforeAfter from "@/components/sections/BeforeAfter";
-import Experience3D from "@/components/sections/Experience3D";
-import Services from "@/components/sections/Services";
-import Designer from "@/components/sections/Designer";
-import ClientVoices from "@/components/sections/ClientVoices";
-import Process from "@/components/sections/Process";
-import Journal from "@/components/sections/Journal";
-import InstagramSection from "@/components/sections/InstagramSection";
-import Faq from "@/components/sections/Faq";
-import ContactCTA from "@/components/sections/ContactCTA";
+import { About } from "@/components/sections/About";
+import { BeforeAfterSection } from "@/components/sections/BeforeAfterSection";
+import { Contact } from "@/components/sections/Contact";
+import { Hero } from "@/components/sections/Hero";
+import { Manifesto } from "@/components/sections/Manifesto";
+import { PhotoBreak } from "@/components/sections/PhotoBreak";
+import { Process } from "@/components/sections/Process";
+import { SelectedProjects } from "@/components/sections/SelectedProjects";
+import { Services } from "@/components/sections/Services";
+import { Statement } from "@/components/sections/Statement";
+import { Stats } from "@/components/sections/Stats";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main>
+    <>
       <Hero />
-      <Intro />
-      <Press />
-      <ProjectsSection />
-      <MaterialsPalette />
-      <BeforeAfter />
-      <Experience3D />
+      <Manifesto />
+      <SelectedProjects />
       <Services />
-      <Designer />
-      <ClientVoices />
+      <Statement />
+      <PhotoBreak />
+      <About />
       <Process />
-      <Journal />
-      <InstagramSection />
-      <Faq />
-      <ContactCTA />
-    </main>
+      <BeforeAfterSection />
+      <Stats />
+      <Contact />
+    </>
   );
 }

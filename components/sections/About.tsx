@@ -1,34 +1,84 @@
-import Image from "next/image";
-import RevealOnScroll from "@/components/ui/RevealOnScroll";
+import { ImageReveal } from "@/components/animations/ImageReveal";
+import { Parallax } from "@/components/animations/Parallax";
+import { Reveal } from "@/components/animations/Reveal";
+import { ArchImage } from "@/components/ui/ArchImage";
+import { ArrowLink } from "@/components/ui/ArrowLink";
+import { SectionLabel } from "@/components/ui/SectionLabel";
+import { about } from "@/data/site";
 
-export default function About() {
+export function About({ withLink = true }: { withLink?: boolean }) {
   return (
-    <section id="hakkimizda" className="py-24 md:py-32 container-edge">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 items-center">
-        <RevealOnScroll className="md:col-span-5 order-2 md:order-1">
-          <p className="font-display font-light text-3xl md:text-4xl leading-snug mb-6">
-            Mekân yalnızca dört duvardan ibaret değildir. Bir yaşam biçimidir.
-          </p>
-          <p className="text-[var(--color-stone)] leading-relaxed max-w-md">
-            Tokat merkezli bir iç mimarlık atölyesiyiz. Her projeye, mekânı
-            kullanacak insanın gündelik ritminden ve ışığın günü nasıl
-            geçirdiğinden yola çıkarak başlıyoruz. Ölçekten bağımsız olarak,
-            bir iç mekânın kalıcı olması için önce doğru soruları sormak
-            gerektiğine inanıyoruz.
-          </p>
-        </RevealOnScroll>
-
-        <RevealOnScroll delay={0.15} className="md:col-span-7 order-1 md:order-2">
-          <div className="relative aspect-[4/5] md:aspect-[5/4] w-full overflow-hidden">
-            <Image
-              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=80"
-              alt="Yunus Mimarlık stüdyosundan bir kesit"
-              fill
-              sizes="(min-width: 768px) 60vw, 100vw"
-              className="object-cover"
-            />
+    <section data-theme="sage" aria-labelledby="about-title" className="relative">
+      <div className="container-arch section-y">
+        <div className="grid-arch gap-y-14">
+          <div className="col-span-4 md:col-span-6">
+            <ImageReveal className="media-frame max-md:bleed-x md:bleed-left">
+              <Parallax distance={40} className="-my-10">
+                <ArchImage image={about.image} ratio="4 / 5" sizes="(min-width: 768px) 55vw, 100vw" />
+              </Parallax>
+            </ImageReveal>
+            <div className="mt-3 flex justify-between text-muted">
+              <span className="t-label">Stüdyo</span>
+              <span className="t-label">Tokat Merkez</span>
+            </div>
           </div>
-        </RevealOnScroll>
+
+          <div className="col-span-4 flex flex-col md:col-span-6 md:col-start-7 md:pt-10 lg:col-span-5 lg:col-start-8">
+            <SectionLabel index="03" en="Studio">
+              Stüdyo
+            </SectionLabel>
+            <h2 id="about-title" className="t-h1 mt-6">
+              {about.title}
+            </h2>
+
+            <Reveal>
+              <blockquote className="mt-10 border-l-2 border-accent pl-6">
+                <p className="t-serif text-[clamp(1.5rem,2.4vw,2.25rem)] leading-[1.2]">“{about.quote}”</p>
+              </blockquote>
+
+              <p className="t-lead mt-10 font-medium">{about.lead}</p>
+              {about.paragraphs.map((paragraph) => (
+                <p key={paragraph.slice(0, 24)} className="mt-5 text-foreground/80">
+                  {paragraph}
+                </p>
+              ))}
+            </Reveal>
+
+            <ul className="mt-12 grid grid-cols-2 border-t border-border">
+              {about.expertise.map((item, index) => (
+                <li key={item} className="border-b border-border py-4 pr-3">
+                  <span className="t-label t-num block text-accent">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="t-label mt-2 block text-foreground">{item.toLocaleUpperCase("tr-TR")}</span>
+                </li>
+              ))}
+            </ul>
+
+            {withLink ? null : (
+              <dl className="mt-12 grid grid-cols-2 border-t border-border">
+                {about.values.map((value, index) => (
+                  <div key={value.title} className="border-b border-border py-5 pr-4 odd:border-r odd:pr-6 even:pl-6">
+                    <dt className="t-label flex items-center gap-2">
+                      <span className="t-num text-accent">{String(index + 1).padStart(2, "0")}</span>
+                      {value.title.toLocaleUpperCase("tr-TR")}
+                    </dt>
+                    <dd className="mt-2 text-[0.9375rem] text-muted">{value.text}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+
+            <div className="mt-12 grid grid-cols-[1fr_auto] items-end gap-6">
+              <div className="max-w-[16rem]">
+                <ArchImage image={about.detailImage} ratio="1 / 1" sizes="16rem" quality={70} />
+              </div>
+              {withLink ? (
+                <ArrowLink href="/hakkimizda" className="mb-1">
+                  Hakkımızda
+                </ArrowLink>
+              ) : null}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

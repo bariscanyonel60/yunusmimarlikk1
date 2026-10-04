@@ -1,102 +1,78 @@
-import type { Metadata } from "next";
-import ContactForm from "@/components/sections/ContactForm";
-import RevealOnScroll from "@/components/ui/RevealOnScroll";
-import Breadcrumbs from "@/components/seo/Breadcrumbs";
+import { Reveal } from "@/components/animations/Reveal";
+import { PageHeader, pageImage } from "@/components/layout/PageHeader";
+import { Contact } from "@/components/sections/Contact";
+import { ArrowLink } from "@/components/ui/ArrowLink";
+import { JsonLd } from "@/components/ui/JsonLd";
+import { SectionLabel } from "@/components/ui/SectionLabel";
+import { site } from "@/data/site";
+import { breadcrumbSchema } from "@/lib/json-ld";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "İletişim | Tokat İç Mimar — Yunus Mimarlık",
-  description:
-    "Tokat'ta iç mimarlık projeniz için Yunus Mimarlık ile iletişime geçin. CİMCİM İş Merkezi, Gaziosmanpaşa Bulvarı, Tokat. Telefon: 0545 545 31 52.",
-  alternates: { canonical: "https://yunusmimarlik.com/iletisim" },
-};
+export const metadata = buildMetadata({
+  title: "İletişim — Tokat Mimarlık & İç Mimarlık Ofisi",
+  description: `Yunus Mimarlık, ${site.fullAddress}. Telefon: ${site.phone.display}. Mimari proje ve iç mekân tasarımı için stüdyomuzla iletişime geçin.`,
+  path: "/iletisim",
+});
 
-export default function IletisimPage() {
+const preparation = [
+  "Projenin konumu: arsa, daire veya ticari mekân bilgisi",
+  "Yaklaşık metrekare ve mevcut durum (yeni yapı, yenileme, dönüşüm)",
+  "Varsa tapu, imar durumu veya mevcut proje çizimleri",
+  "Beklentileriniz, zaman planınız ve öngördüğünüz bütçe aralığı",
+];
+
+export default function ContactPage() {
   return (
-    <main className="pt-36 md:pt-44 pb-24">
-      <Breadcrumbs
-        items={[
-          { label: "Anasayfa", href: "/" },
-          { label: "İletişim", href: "/iletisim" },
-        ]}
+    <>
+      <PageHeader
+        index="06"
+        label="İletişim"
+        lines={["PROJENİZİ", "KONUŞALIM."]}
+        intro="Yeni bir yapı, yaşam alanınızın yenilenmesi veya ticari mekânınız için Tokat'taki stüdyomuzla iletişime geçin."
+        aside={
+          <ArrowLink href={site.phone.href} direction="right" className="mt-6">
+            {site.phone.display}
+          </ArrowLink>
+        }
+        image={pageImage("iletisim", "Gece aydınlatılmış pencereleriyle çağdaş bir yapı cephesi")}
       />
 
-      <div className="container-edge grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 mb-16">
-        <div className="md:col-span-5">
-          <RevealOnScroll>
-            <span className="text-eyebrow block mb-4">Tokat İç Mimar</span>
-            <h1 className="font-display font-light text-4xl md:text-6xl leading-tight mb-10">
-              Hayalinizdeki mekânı birlikte tasarlayalım.
-            </h1>
-          </RevealOnScroll>
+      <Contact index="01" headline={false} />
 
-          <RevealOnScroll delay={0.15} className="flex flex-col gap-8 text-sm">
-            <div>
-              <span className="text-eyebrow block mb-2">Telefon</span>
-              <a href="tel:+905455453152" className="link-underline font-display text-xl">
-                0545 545 31 52
-              </a>
-            </div>
-            <div>
-              <span className="text-eyebrow block mb-2">Adres</span>
-              <a
-                href="https://maps.google.com/?q=CİMCİM+İş+Merkezi+Alipaşa+Gaziosmanpaşa+Bulvarı+190+Tokat"
-                target="_blank"
-                rel="noreferrer"
-                className="link-underline"
-              >
-                CİMCİM İş Merkezi, Alipaşa,
+      <section data-theme="light" aria-labelledby="prepare-title">
+        <div className="container-arch section-y">
+          <div className="grid-arch gap-y-12">
+            <div className="col-span-4 md:col-span-5">
+              <SectionLabel index="02">İlk görüşme</SectionLabel>
+              <h2 id="prepare-title" className="t-h2 mt-6">
+                Görüşmeye gelirken
                 <br />
-                Gaziosmanpaşa Bulvarı No:190/C Kat:3, Tokat
-              </a>
+                <span className="t-serif">yanınızda olsun.</span>
+              </h2>
             </div>
-            <div>
-              <span className="text-eyebrow block mb-2">Hizmet Bölgesi</span>
-              <p>Tokat, Amasya, Sivas, Samsun ve çevre iller</p>
-            </div>
-            <div>
-              <span className="text-eyebrow block mb-2">Instagram</span>
-              <a
-                href="https://instagram.com/yunusmimarlik"
-                target="_blank"
-                rel="noreferrer"
-                className="link-underline"
-              >
-                @yunusmimarlik
-              </a>
-            </div>
-            <div>
-              <span className="text-eyebrow block mb-2">WhatsApp</span>
-              <a
-                href="https://wa.me/905455453152"
-                target="_blank"
-                rel="noreferrer"
-                className="link-underline"
-              >
-                WhatsApp&apos;tan İletişime Geç
-              </a>
-            </div>
-          </RevealOnScroll>
+            <Reveal className="col-span-4 md:col-span-6 md:col-start-7">
+              <ol className="border-t border-border">
+                {preparation.map((item, index) => (
+                  <li key={item} className="grid grid-cols-[3rem_1fr] border-b border-border py-5">
+                    <span className="t-label t-num pt-1 text-accent">{String(index + 1).padStart(2, "0")}</span>
+                    <span className="text-foreground/85">{item}</span>
+                  </li>
+                ))}
+              </ol>
+              <p className="mt-8 text-muted">
+                Hepsinin hazır olması gerekmiyor. İlk görüşmede ihtiyaçlarınızı birlikte netleştiriyoruz.
+              </p>
+            </Reveal>
+          </div>
         </div>
+      </section>
 
-        <div className="md:col-span-7">
-          <RevealOnScroll delay={0.1}>
-            <ContactForm />
-          </RevealOnScroll>
-        </div>
-      </div>
-
-      <RevealOnScroll className="container-edge">
-        <span className="text-eyebrow block mb-4">Konum</span>
-        <div className="relative w-full aspect-[16/7] overflow-hidden rounded-[6px]">
-          <iframe
-            title="Yunus Mimarlık - Tokat konum haritası"
-            src="https://www.google.com/maps?q=CİMCİM+İş+Merkezi,+Alipaşa,+Gaziosmanpaşa+Bulvarı+No:190,+Tokat&output=embed"
-            className="absolute inset-0 h-full w-full border-0"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </div>
-      </RevealOnScroll>
-    </main>
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Ana Sayfa", path: "/" },
+          { name: "İletişim", path: "/iletisim" },
+        ])}
+      />
+    </>
   );
 }

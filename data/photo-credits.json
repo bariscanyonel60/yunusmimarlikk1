@@ -1,0 +1,284 @@
+{
+  "images/hero.jpg": {
+    "id": "pnrF8LNYTko",
+    "photographer": "rawkkim",
+    "url": "https://unsplash.com/photos/a-house-that-is-lit-up-at-night-pnrF8LNYTko",
+    "description": "a house that is lit up at night"
+  },
+  "images/manifesto.jpg": {
+    "id": "QKHmi6ENAmk",
+    "photographer": "Ryoji Iwata",
+    "url": "https://unsplash.com/photos/woman-walking-on-white-tiled-flooring-QKHmi6ENAmk",
+    "description": "woman walking on white tiled flooring"
+  },
+  "images/break.jpg": {
+    "id": "2d4lAQAlbDA",
+    "photographer": "Frames For Your Heart",
+    "url": "https://unsplash.com/photos/white-and-grey-concrete-building-near-swimming-pool-under-clear-sky-during-daytime-2d4lAQAlbDA",
+    "description": "white and grey concrete building near swimming pool under clear sky during daytime"
+  },
+  "images/about-detail.jpg": {
+    "id": "FoYxnKIeDjM",
+    "photographer": "Eric Smart",
+    "url": "https://unsplash.com/photos/a-building-that-has-a-bunch-of-columns-in-it-FoYxnKIeDjM",
+    "description": "a building that has a bunch of columns in it"
+  },
+  "images/studio.jpg": {
+    "id": "nGsVMkRatgM",
+    "photographer": "Ryan Ancill",
+    "url": "https://unsplash.com/photos/person-writing-on-white-paper-nGsVMkRatgM",
+    "description": "person writing on white paper"
+  },
+  "images/cta.jpg": {
+    "id": "oZzoDW61aoM",
+    "photographer": "Ria",
+    "url": "https://unsplash.com/photos/dark-brown-wooden-slat-wall-oZzoDW61aoM",
+    "description": "Horizontal dark brown wooden slats with thin shadows between each board"
+  },
+  "images/pages/hizmetler.jpg": {
+    "id": "9AjwOAIdsII",
+    "photographer": "Ricardo Gomez Angel",
+    "url": "https://unsplash.com/photos/gray-concrete-building-during-daytime-9AjwOAIdsII",
+    "description": "gray concrete building during daytime"
+  },
+  "images/pages/hakkimizda.jpg": {
+    "id": "mQiZnKwGXW0",
+    "photographer": "Kimon Maritz",
+    "url": "https://unsplash.com/photos/worms-eye-view-photography-of-concrete-building-mQiZnKwGXW0",
+    "description": "worm's-eye view photography of concrete building"
+  },
+  "images/pages/iletisim.jpg": {
+    "id": "82iQ-l2dBmg",
+    "photographer": "Ondrej Supitar",
+    "url": "https://unsplash.com/photos/modern-building-facade-with-illuminated-windows-at-night-82iQ-l2dBmg",
+    "description": "Modern building facade with illuminated windows at night"
+  },
+  "images/before-after/after.jpg": {
+    "id": "Kh4tedFdHz4",
+    "photographer": "Spacejoy",
+    "url": "https://unsplash.com/photos/white-and-gray-sofa-chair-near-window-Kh4tedFdHz4",
+    "description": "white and gray sofa chair near window"
+  },
+  "images/services/mimari.jpg": {
+    "id": "o_9YmCY0bag",
+    "photographer": "Adrian Cuj",
+    "url": "https://unsplash.com/photos/brown-high-rise-building-o_9YmCY0bag",
+    "description": "brown high rise building"
+  },
+  "images/services/ic-mimari.jpg": {
+    "id": "nQBc6clG3X4",
+    "photographer": "Jakob Owens",
+    "url": "https://unsplash.com/photos/white-sofa-near-brown-wooden-chair-nQBc6clG3X4",
+    "description": "white sofa near brown wooden chair"
+  },
+  "images/services/konut.jpg": {
+    "id": "TEEgJJz3MRI",
+    "photographer": "Musmuliady Jahi",
+    "url": "https://unsplash.com/photos/a-table-and-chairs-outside-of-a-building-TEEgJJz3MRI",
+    "description": "A table and chairs outside of a building"
+  },
+  "images/services/ticari.jpg": {
+    "id": "oAFg6VdXH1M",
+    "photographer": "Dominic Kurniawan Suryaputra",
+    "url": "https://unsplash.com/photos/a-room-with-shelves-and-shelves-filled-with-food-oAFg6VdXH1M",
+    "description": "A room with shelves and shelves filled with food"
+  },
+  "images/services/ofis.jpg": {
+    "id": "wJ7yGwz2-00",
+    "photographer": "Denys Striyeshyn",
+    "url": "https://unsplash.com/photos/brown-wooden-table-and-chairs-wJ7yGwz2-00",
+    "description": "brown wooden table and chairs"
+  },
+  "images/services/uygulama.jpg": {
+    "id": "7JDv9vBeYQA",
+    "photographer": "Brands&People",
+    "url": "https://unsplash.com/photos/gray-concrete-wall-during-daytime-7JDv9vBeYQA",
+    "description": "gray concrete wall during daytime"
+  },
+  "images/services/danismanlik.jpg": {
+    "id": "aJYO8JmVodY",
+    "photographer": "Ryan Ancill",
+    "url": "https://unsplash.com/photos/white-printer-paper-on-brown-wooden-table-aJYO8JmVodY",
+    "description": "white printer paper on brown wooden table"
+  },
+  "projects/kazova-evi/cover.jpg": {
+    "id": "u2l_e5YS548",
+    "photographer": "Alef Morais",
+    "url": "https://unsplash.com/photos/modern-wooden-house-with-large-windows-and-palm-trees-u2l_e5YS548",
+    "description": "Modern wooden house with large windows and palm trees"
+  },
+  "projects/kazova-evi/01.jpg": {
+    "id": "4_jQL4JCS98",
+    "photographer": "Collov Home Design",
+    "url": "https://unsplash.com/photos/living-room-with-brown-sofa-and-glass-window-4_jQL4JCS98",
+    "description": "living room with brown sofa and glass window"
+  },
+  "projects/kazova-evi/02.jpg": {
+    "id": "0B7ijYKaKcE",
+    "photographer": "Alesia Kazantceva",
+    "url": "https://unsplash.com/photos/minimalist-concrete-staircase-with-vase-0B7ijYKaKcE",
+    "description": "A minimalist staircase with white concrete steps leading to a landing with a vase"
+  },
+  "projects/kazova-evi/03.jpg": {
+    "id": "1jn_3WBp60I",
+    "photographer": "Ricardo Gomez Angel",
+    "url": "https://unsplash.com/photos/brown-wooden-table-near-white-wall-1jn_3WBp60I",
+    "description": "brown wooden table near white wall"
+  },
+  "projects/kazova-evi/04.jpg": {
+    "id": "KL-IZsX51tc",
+    "photographer": "Jaykumar Bherwani",
+    "url": "https://unsplash.com/photos/modern-building-facade-with-open-windows-KL-IZsX51tc",
+    "description": "Modern building facade with open windows"
+  },
+  "projects/yesilirmak-ofis/cover.jpg": {
+    "id": "wawEfYdpkag",
+    "photographer": "Austin Distel",
+    "url": "https://unsplash.com/photos/man-in-blue-dress-shirt-sitting-on-rolling-chair-inside-room-with-monitors-wawEfYdpkag",
+    "description": "man in blue dress shirt sitting on rolling chair inside room with monitors"
+  },
+  "projects/yesilirmak-ofis/01.jpg": {
+    "id": "ZMK4lzeuCLo",
+    "photographer": "myHQ Workspaces",
+    "url": "https://unsplash.com/photos/brown-wooden-table-and-chairs-ZMK4lzeuCLo",
+    "description": "brown wooden table and chairs"
+  },
+  "projects/yesilirmak-ofis/02.jpg": {
+    "id": "nZ50HrjAFNc",
+    "photographer": "NEW DATA SERVICES",
+    "url": "https://unsplash.com/photos/two-chairs-near-the-window-nZ50HrjAFNc",
+    "description": "two chairs near the window"
+  },
+  "projects/yesilirmak-ofis/03.jpg": {
+    "id": "7J8jHnXF0nA",
+    "photographer": "Paul Hanaoka",
+    "url": "https://unsplash.com/photos/brown-wooden-board-on-white-wall-7J8jHnXF0nA",
+    "description": "brown wooden board on white wall"
+  },
+  "projects/yesilirmak-ofis/04.jpg": {
+    "id": "E7Tzh2TTS6c",
+    "photographer": "Smartworks Coworking",
+    "url": "https://unsplash.com/photos/unknown-person-sitting-on-blue-couch-E7Tzh2TTS6c",
+    "description": "unknown person sitting on blue couch"
+  },
+  "projects/avlu-kahve/cover.jpg": {
+    "id": "yr9l_xQPDL0",
+    "photographer": "99.films",
+    "url": "https://unsplash.com/photos/round-brown-wooden-tables-beside-black-leather-sofa-yr9l_xQPDL0",
+    "description": "round brown wooden tables beside black leather sofa"
+  },
+  "projects/avlu-kahve/01.jpg": {
+    "id": "jjzLTF6S7ss",
+    "photographer": "Lawrence Suzara",
+    "url": "https://unsplash.com/photos/people-inside-restaurant-jjzLTF6S7ss",
+    "description": "people inside restaurant"
+  },
+  "projects/avlu-kahve/02.jpg": {
+    "id": "NYGgdHWDlJM",
+    "photographer": "Jojo Yuen (sharemyfoodd)",
+    "url": "https://unsplash.com/photos/people-sitting-on-bench-in-front-of-store-during-daytime-NYGgdHWDlJM",
+    "description": "people sitting on bench in front of store during daytime"
+  },
+  "projects/avlu-kahve/03.jpg": {
+    "id": "-b0AvBlkWm8",
+    "photographer": "Kris Tian",
+    "url": "https://unsplash.com/photos/panaderia-rosetta-bakery-interior-with-display-cases--b0AvBlkWm8",
+    "description": "Panaderia rosetta bakery interior with display cases"
+  },
+  "projects/avlu-kahve/04.jpg": {
+    "id": "gWMO31b9ykA",
+    "photographer": "noo jang",
+    "url": "https://unsplash.com/photos/cafe-interior-with-chairs-plants-and-warm-lighting-gWMO31b9ykA",
+    "description": "Cafe interior with chairs, plants, and warm lighting"
+  },
+  "projects/camlibel-konutlari/cover.jpg": {
+    "id": "koH7IVuwRLw",
+    "photographer": "Luke van Zyl",
+    "url": "https://unsplash.com/photos/black-and-white-cocnrete-building-low-angle-photography-koH7IVuwRLw",
+    "description": "black and white cocnrete building low-angle photography"
+  },
+  "projects/camlibel-konutlari/01.jpg": {
+    "id": "PshCtT16gJo",
+    "photographer": "Mika Baumeister",
+    "url": "https://unsplash.com/photos/white-and-brown-concrete-building-PshCtT16gJo",
+    "description": "white and brown concrete building"
+  },
+  "projects/camlibel-konutlari/02.jpg": {
+    "id": "9umJW7riFIs",
+    "photographer": "Pierre Châtel-Innocenti",
+    "url": "https://unsplash.com/photos/brown-high-rise-building-9umJW7riFIs",
+    "description": "brown high-rise building"
+  },
+  "projects/camlibel-konutlari/03.jpg": {
+    "id": "gNY6RsMIsPo",
+    "photographer": "Sébastien Lavalaye",
+    "url": "https://unsplash.com/photos/a-modern-spiral-staircase-ascends-inside-a-concrete-building-gNY6RsMIsPo",
+    "description": "A modern spiral staircase ascends inside a concrete building"
+  },
+  "projects/camlibel-konutlari/04.jpg": {
+    "id": "91-cEibWbvk",
+    "photographer": "Rajith Jayawardana",
+    "url": "https://unsplash.com/photos/a-white-couch-sitting-in-a-living-room-next-to-a-window-91-cEibWbvk",
+    "description": "a white couch sitting in a living room next to a window"
+  },
+  "projects/tas-ev-donusumu/cover.jpg": {
+    "id": "kCLj_2TetQ8",
+    "photographer": "Salvo Media LLC",
+    "url": "https://unsplash.com/photos/modern-empty-room-with-brick-wall-large-windows-and-chandelier-kCLj_2TetQ8",
+    "description": "Modern empty room with brick wall, large windows, and chandelier"
+  },
+  "projects/tas-ev-donusumu/01.jpg": {
+    "id": "2IypI0KKsS8",
+    "photographer": "Elimende Inagella",
+    "url": "https://unsplash.com/photos/brown-wooden-armchair-near-window-2IypI0KKsS8",
+    "description": "brown wooden armchair near window"
+  },
+  "projects/tas-ev-donusumu/02.jpg": {
+    "id": "YABErdnJPGc",
+    "photographer": "Sosey Interiors",
+    "url": "https://unsplash.com/photos/rustic-kitchen-with-wooden-island-and-stools-YABErdnJPGc",
+    "description": "rustic kitchen with wooden island and stools"
+  },
+  "projects/tas-ev-donusumu/04.jpg": {
+    "id": "shLcFb-7pFs",
+    "photographer": "Joao Vitor Marcilio",
+    "url": "https://unsplash.com/photos/white-and-brown-concrete-building-under-blue-sky-during-daytime-shLcFb-7pFs",
+    "description": "white and brown concrete building under blue sky during daytime"
+  },
+  "projects/atolye-showroom/cover.jpg": {
+    "id": "4lJyKv1tzww",
+    "photographer": "Kevin Grieve",
+    "url": "https://unsplash.com/photos/white-and-black-concrete-building-during-night-time-4lJyKv1tzww",
+    "description": "white and black concrete building during night time"
+  },
+  "projects/atolye-showroom/01.jpg": {
+    "id": "R0ZtZwlSEn8",
+    "photographer": "Alex Kolundzija",
+    "url": "https://unsplash.com/photos/a-room-with-a-couch-and-two-windows-R0ZtZwlSEn8",
+    "description": "a room with a couch and two windows"
+  },
+  "projects/atolye-showroom/02.jpg": {
+    "id": "rHet0kpKxDc",
+    "photographer": "Kirill",
+    "url": "https://unsplash.com/photos/closed-gray-windowpane-rHet0kpKxDc",
+    "description": "closed gray windowpane"
+  },
+  "projects/atolye-showroom/03.jpg": {
+    "id": "Kost8p_Yhqg",
+    "photographer": "Tile Merchant Ireland",
+    "url": "https://unsplash.com/photos/a-living-room-filled-with-furniture-and-a-large-window-Kost8p_Yhqg",
+    "description": "a living room filled with furniture and a large window"
+  },
+  "projects/atolye-showroom/04.jpg": {
+    "id": "cBiQfqb1BQU",
+    "photographer": "Max Böhme",
+    "url": "https://unsplash.com/photos/modern-shell-shaped-concrete-pavilion-by-the-sea-cBiQfqb1BQU",
+    "description": "Modern shell-shaped concrete pavilion by the sea"
+  },
+  "projects/tas-ev-donusumu/03.jpg": {
+    "id": "nLOwnTY0o84",
+    "photographer": "Cardia Gong",
+    "url": "https://unsplash.com/photos/a-table-with-a-vase-of-flowers-on-top-of-it-nLOwnTY0o84",
+    "description": "a table with a vase of flowers on top of it"
+  }
+}
