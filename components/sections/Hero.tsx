@@ -111,7 +111,7 @@ export function Hero() {
                 fill
                 priority
                 fetchPriority="high"
-                sizes="100vw"
+                sizes="(max-width: 767px) 100vw, 0px"
                 className="object-cover object-[center_28%]"
               />
             </div>
@@ -122,7 +122,7 @@ export function Hero() {
                 fill
                 priority
                 fetchPriority="high"
-                sizes="100vw"
+                sizes="(max-width: 767px) 0px, 100vw"
                 className="object-cover object-[center_40%]"
               />
             </div>
