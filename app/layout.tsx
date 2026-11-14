@@ -1,98 +1,80 @@
-import type { Metadata, Viewport } from "next";
-import { Archivo, Cormorant_Garamond, Instrument_Sans } from "next/font/google";
-import { MotionProvider } from "@/components/animations/MotionProvider";
-import { SmoothScroll } from "@/components/animations/SmoothScroll";
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
-import { Intro, introScript } from "@/components/layout/Intro";
-import { JsonLd } from "@/components/ui/JsonLd";
-import { site } from "@/data/site";
-import { professionalServiceSchema, websiteSchema } from "@/lib/json-ld";
-import "./globals.css";
+import type { Metadata, Viewport } from 'next';
+import { Archivo, Manrope } from 'next/font/google';
+import { Footer } from '@/components/ui/Footer';
+import { Header } from '@/components/ui/Header';
+import { Cursor } from '@/components/ui/Cursor';
+import { StickyCta } from '@/components/ui/StickyCta';
+import { TopCta } from '@/components/ui/TopCta';
+import { SmoothScroll } from '@/lib/motion/SmoothScroll';
+import { organizationJsonLd, pageMetadata, websiteJsonLd } from '@/lib/seo';
+import { pageSeo } from '@/content/seo';
+import { site } from '@/content/site';
+import './globals.css';
 
 const archivo = Archivo({
-  subsets: ["latin", "latin-ext"],
-  axes: ["wdth"],
-  variable: "--font-archivo",
-  display: "swap",
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-archivo',
+  display: 'swap',
+  weight: ['500', '600', '700'],
 });
 
-const instrumentSans = Instrument_Sans({
-  subsets: ["latin", "latin-ext"],
-  variable: "--font-instrument",
-  display: "swap",
+const manrope = Manrope({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-manrope',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
 });
 
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400"],
-  style: ["italic"],
-  variable: "--font-cormorant",
-  display: "swap",
-});
+export const viewport: Viewport = {
+  themeColor: '#162A4F',
+  colorScheme: 'light',
+};
+
+const homeMeta = pageMetadata(pageSeo.home);
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: {
-    default: "Yunus Mimarlık | Tokat Mimarlık & İç Mimarlık",
-    template: `%s | ${site.name}`,
-  },
-  description: site.description,
+  ...homeMeta,
   applicationName: site.name,
   authors: [{ name: site.name }],
   creator: site.name,
-  formatDetection: { telephone: true, address: true, email: false },
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    locale: site.locale,
-    siteName: site.name,
-    url: "/",
-    title: "Yunus Mimarlık | Tokat Mimarlık & İç Mimarlık",
-    description: site.description,
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Yunus Mimarlık" }],
+  publisher: site.name,
+  icons: {
+    icon: [
+      { url: '/assets/brand/favicon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/assets/brand/favicon-48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/assets/brand/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/assets/brand/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [{ url: '/assets/brand/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+    shortcut: ['/assets/brand/favicon-32.png'],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Yunus Mimarlık | Tokat Mimarlık & İç Mimarlık",
-    description: site.description,
-    images: ["/og.jpg"],
+  other: {
+    'msapplication-TileColor': '#162A4F',
   },
-  robots: { index: true, follow: true },
 };
 
-export const viewport: Viewport = {
-  themeColor: "#121c28",
-  colorScheme: "light",
-};
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const jsonLd = [organizationJsonLd(), websiteJsonLd()];
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="tr"
-      suppressHydrationWarning
-      className={`${archivo.variable} ${instrumentSans.variable} ${cormorant.variable}`}
-    >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: introScript }} />
-      </head>
-      <body>
-        <a
-          href="#main"
-          className="t-label fixed left-4 top-4 z-[110] -translate-y-24 bg-ink px-4 py-3 text-paper transition-transform focus:translate-y-0"
-        >
+    <html lang="tr" className={`${archivo.variable} ${manrope.variable}`}>
+      <body className="antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <a className="skip" href="#icerik">
           İçeriğe geç
         </a>
-        <Intro />
-        <SmoothScroll />
-        <MotionProvider>
+        <TopCta />
+        <SmoothScroll>
           <Header />
-          <main id="main" tabIndex={-1} className="outline-none">
-            {children}
-          </main>
+          <main id="icerik">{children}</main>
           <Footer />
-        </MotionProvider>
-        <JsonLd data={[professionalServiceSchema(), websiteSchema()]} />
+          <StickyCta />
+          <Cursor />
+        </SmoothScroll>
       </body>
     </html>
   );

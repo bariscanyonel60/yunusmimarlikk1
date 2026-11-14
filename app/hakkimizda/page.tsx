@@ -1,84 +1,67 @@
-import { Reveal } from "@/components/animations/Reveal";
-import { PageHeader, pageImage } from "@/components/layout/PageHeader";
-import { About } from "@/components/sections/About";
-import { Contact } from "@/components/sections/Contact";
-import { Process } from "@/components/sections/Process";
-import { Statement } from "@/components/sections/Statement";
-import { JsonLd } from "@/components/ui/JsonLd";
-import { SectionLabel } from "@/components/ui/SectionLabel";
-import { breadcrumbSchema } from "@/lib/json-ld";
-import { buildMetadata } from "@/lib/seo";
+import Image from 'next/image';
+import { InternalLinks } from '@/components/sections/InternalLinks';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { pageSeo } from '@/content/seo';
+import { imgPath, site } from '@/content/site';
+import { LineSplit, Reveal } from '@/lib/motion/Reveal';
+import { pageMetadata, webpageJsonLd } from '@/lib/seo';
 
-export const metadata = buildMetadata({
-  title: "Hakkımızda — Tokat Mimarlık Stüdyosu",
-  description:
-    "Yunus Mimarlık; Tokat merkezli, konut, ofis ve ticari yapılar için mimari proje ve iç mekân tasarımı üreten bir mimarlık ve iç mimarlık stüdyosudur.",
-  path: "/hakkimizda",
-});
-
-const principles = [
-  {
-    title: "Yeri okumak",
-    text: "Her proje arsanın yönü, iklimi, manzarası ve komşu yapılarla kurduğu ilişkiyle başlar. Tokat'ın sert kışları ve sıcak yazları, tasarım kararlarımızın doğal bir parçasıdır.",
-  },
-  {
-    title: "Sadeleştirmek",
-    text: "İhtiyaç programını en yalın hâline indirgeyip estetiği bu sadeliğin üzerine kurarız. Gereksiz her eleman, bakımı ve maliyeti olan bir karardır.",
-  },
-  {
-    title: "Detayda ısrar etmek",
-    text: "Bir mekânın kalitesi malzemelerin birleştiği noktalarda okunur. Uygulama projelerini, şantiyede yoruma yer bırakmayacak netlikte hazırlarız.",
-  },
-];
+export const metadata = pageMetadata(pageSeo.hakkimizda);
 
 export default function AboutPage() {
+  const ld = webpageJsonLd(pageSeo.hakkimizda);
+
   return (
     <>
-      <PageHeader
-        index="03"
-        label="Stüdyo"
-        lines={["MEKÂNA", "BAKIŞIMIZ"]}
-        intro="Tokat merkezli mimarlık ve iç mimarlık stüdyosu. Yapıyı kabuğundan son detayına kadar tek bir bütün olarak ele alıyoruz."
-        image={pageImage("hakkimizda", "Beyaz, kıvrımlı cephesiyle çağdaş bir yapı")}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
+      <Breadcrumb
+        items={[
+          { name: 'Ana sayfa', path: '/' },
+          { name: 'Stüdyo', path: '/hakkimizda' },
+        ]}
       />
-
-      <About withLink={false} />
-
-      <section data-theme="light" aria-labelledby="principles-title">
-        <div className="container-arch section-y">
-          <div className="grid-arch gap-y-6">
-            <div className="col-span-4 md:col-span-4">
-              <SectionLabel index="—">Yaklaşım</SectionLabel>
-              <h2 id="principles-title" className="t-h2 mt-6">
-                Üç ilke,
-                <br />
-                <span className="t-serif">her ölçekte.</span>
-              </h2>
-            </div>
-          </div>
-          <ol className="mt-16 grid gap-y-12 md:mt-24 md:grid-cols-3 md:gap-x-10">
-            {principles.map((principle, index) => (
-              <li key={principle.title} className="border-t border-border pt-6">
-                <Reveal delay={index * 0.08}>
-                  <p className="t-serif text-[clamp(3rem,5vw,4.5rem)] leading-none text-accent">{index + 1}</p>
-                  <h3 className="t-h3 mt-6">{principle.title}</h3>
-                  <p className="mt-4 text-muted">{principle.text}</p>
-                </Reveal>
-              </li>
+      <section className="wrap grid gap-12 pb-24 pt-8 lg:grid-cols-12" data-theme="light">
+        <div className="lg:col-span-7">
+          <p className="eyebrow">{site.studio.eyebrow}</p>
+          <Reveal as="h1" mode="lines" className="h2">
+            <LineSplit lines={['HER MEKÂNIN', 'BİR HİKÂYESİ', 'VAR.']} />
+          </Reveal>
+          <div className="mt-10 max-w-xl space-y-5 text-[var(--ink-2)]">
+            {site.studio.paragraphs.map((p) => (
+              <Reveal as="p" key={p.slice(0, 20)}>
+                {p}
+              </Reveal>
             ))}
-          </ol>
+            <Reveal as="p">
+              Çalışmalarımız; konut mimarlığı, iç mimarlık, ticari mekân ve sağlık yapıları ile mimari
+              görselleştirme ekseninde ilerler. Her projede oran, ışık ve malzeme bir arada düşünülür.
+            </Reveal>
+          </div>
+          <Reveal as="p" className="mt-12">
+            <span className="cat">Kurucu mimar</span>
+            <br />
+            <span className="mt-2 inline-block font-[family-name:var(--font-display)] text-2xl font-bold tracking-[-0.02em]">
+              {site.founder.name}
+            </span>
+            {!site.founder.verified ? (
+              <span className="mt-2 block text-sm text-[var(--concrete)]">
+                Biyografi ve deneyim detayları onay sonrası yayınlanacaktır.
+              </span>
+            ) : null}
+          </Reveal>
         </div>
+        <Reveal as="figure" mode="mask" className="relative aspect-[3/4] overflow-hidden lg:col-span-5">
+          <Image
+            src={imgPath('studio-calisma.jpg')}
+            alt="Yunus Mimarlık stüdyo çalışma alanı ve malzeme örnekleri"
+            fill
+            sizes="(max-width:1024px) 100vw, 40vw"
+            className="object-cover"
+            priority
+          />
+        </Reveal>
       </section>
-
-      <Statement />
-      <Process />
-      <Contact />
-      <JsonLd
-        data={breadcrumbSchema([
-          { name: "Ana Sayfa", path: "/" },
-          { name: "Hakkımızda", path: "/hakkimizda" },
-        ])}
-      />
+      <InternalLinks />
     </>
   );
 }

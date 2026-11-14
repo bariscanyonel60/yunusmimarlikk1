@@ -1,49 +1,158 @@
-import type { Metadata } from "next";
-import { site } from "@/data/site";
-import type { ImageAsset } from "@/lib/types";
+import type { Metadata } from 'next';
+import { site } from '@/content/site';
 
-const DEFAULT_OG_IMAGE = {
-  url: "/og.jpg",
-  width: 1200,
-  height: 630,
-  alt: "Yunus Mimarlık — Tokat mimarlık ve iç mimarlık stüdyosu",
-};
-
-type PageMetadataInput = {
-  title: string;
-  description: string;
-  path: string;
-  image?: ImageAsset;
-  absoluteTitle?: boolean;
-};
-
-export function absoluteUrl(path: string): string {
-  return `${site.url}${path.startsWith("/") ? path : `/${path}`}`;
+export function absoluteUrl(path = '/') {
+  return new URL(path, site.url).toString();
 }
 
-export function buildMetadata({ title, description, path, image, absoluteTitle }: PageMetadataInput): Metadata {
-  const ogImage = image
-    ? { url: image.src, width: image.width, height: image.height, alt: image.alt }
-    : DEFAULT_OG_IMAGE;
-
+export function pageMetadata({
+  title,
+  description,
+  path = '/',
+  image = '/assets/img/hero-yunus-giris-desktop.jpg',
+}: {
+  title: string;
+  description: string;
+  path?: string;
+  image?: string;
+}): Metadata {
+  const url = absoluteUrl(path);
+  const ogImage = absoluteUrl(image);
   return {
-    title: absoluteTitle ? { absolute: title } : title,
+    title,
     description,
-    alternates: { canonical: path },
+    alternates: { canonical: url },
     openGraph: {
-      type: "website",
+      type: 'website',
       locale: site.locale,
       siteName: site.name,
-      url: path,
-      title: absoluteTitle ? title : `${title} | ${site.name}`,
+      title,
+      description,
+      url,
+      images: [
+        {
+          url: ogImage,
+          width: 1280,
+          height: 720,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
       description,
       images: [ogImage],
     },
-    twitter: {
-      card: "summary_large_image",
-      title: absoluteTitle ? title : `${title} | ${site.name}`,
-      description,
-      images: [ogImage.url],
+    robots: {
+      index: true,
+      follow: true,
     },
+  };
+}
+
+export function organizationJsonLd() {
+  const org: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': ['Organization', 'ProfessionalService'],
+    name: site.name,
+    url: site.url,
+    logo: absoluteUrl('/assets/brand/logo-navy.png'),
+    image: absoluteUrl('/assets/img/hero-yunus-giris-desktop.jpg'),
+    brand: {
+      '@type': 'Brand',
+      name: site.name,
+      logo: absoluteUrl('/assets/brand/mark-transparent.png'),
+    },
+    description: site.description,
+    sameAs: [site.instagram.url],
+    areaServed: 'TR',
+    knowsAbout: [
+      'İç mimarlık',
+      'Mimari tasarım',
+      'Konut mimarlığı',
+      'Ticari mekân tasarımı',
+      'Mimari görselleştirme',
+    ],
+  };
+
+  if (site.founder.verified) {
+    org.founder = {
+      '@type': 'Person',
+      name: site.founder.name,
+      jobTitle: site.founder.title,
+    };
+  }
+
+  if (site.pending.email) org.email = site.pending.email;
+  if (site.pending.phone) org.telephone = site.pending.phone;
+  if (site.pending.address) {
+    org.address = {
+      '@type': 'PostalAddress',
+      streetAddress: site.pending.address,
+      addressCountry: 'TR',
+    };
+  }
+
+  return org;
+}
+
+export function websiteJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: site.name,
+    url: site.url,
+    inLanguage: 'tr',
+    description: site.description,
+    publisher: { '@type': 'Organization', name: site.name, url: site.url },
+  };
+}
+
+export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      item: absoluteUrl(item.path),
+    })),
+  };
+}
+
+export function faqJsonLd(items: readonly { q: string; a: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.a,
+      },
+    })),
+  };
+}
+
+export function webpageJsonLd({
+  title,
+  description,
+  path,
+}: {
+  title: string;
+  description: string;
+  path: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url: absoluteUrl(path),
+    isPartOf: { '@type': 'WebSite', name: site.name, url: site.url },
+    inLanguage: 'tr',
   };
 }

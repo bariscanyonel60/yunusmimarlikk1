@@ -1,178 +1,166 @@
-import { ArrowRight } from "lucide-react";
-import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import type { CSSProperties } from "react";
-import { Reveal } from "@/components/animations/Reveal";
-import { ProjectGallery } from "@/components/projects/ProjectGallery";
-import { ArchImage } from "@/components/ui/ArchImage";
-import { JsonLd } from "@/components/ui/JsonLd";
-import {
-  categoryLabels,
-  formatArea,
-  getNextProject,
-  getProjectBySlug,
-  projects,
-  statusLabels,
-} from "@/data/projects";
-import { breadcrumbSchema } from "@/lib/json-ld";
-import { buildMetadata } from "@/lib/seo";
+import Image from 'next/image';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { InternalLinks } from '@/components/sections/InternalLinks';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { getNextProject, getProject, imgPath, projects, site } from '@/content/site';
+import { LineSplit, Reveal } from '@/lib/motion/Reveal';
+import { absoluteUrl, pageMetadata } from '@/lib/seo';
 
-type Params = { slug: string };
+type Props = { params: Promise<{ slug: string }> };
 
-export const dynamicParams = false;
-
-export function generateStaticParams(): Params[] {
-  return projects.map((project) => ({ slug: project.slug }));
+export function generateStaticParams() {
+  return projects.map((p) => ({ slug: p.slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
+export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const project = getProject(slug);
   if (!project) return {};
-  return buildMetadata({
-    title: `${project.title} — ${categoryLabels[project.category]} Projesi, ${project.location}`,
-    description: project.summary,
+  return pageMetadata({
+    title: `${project.title} — ${project.category} | ${site.name}`,
+    description: `${project.summary} Yunus Mimarlık ${project.category.toLocaleLowerCase('tr-TR')} projesi.`,
     path: `/projeler/${project.slug}`,
-    image: project.coverImage,
+    image: imgPath(project.cover.src),
   });
 }
 
-const delay = (ms: number) => ({ "--delay": `${ms}ms` }) as CSSProperties;
-
-export default async function ProjectDetailPage({ params }: { params: Promise<Params> }) {
+export default async function ProjectDetailPage({ params }: Props) {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const project = getProject(slug);
   if (!project) notFound();
+  const next = getNextProject(slug);
 
-  const next = getNextProject(project.slug);
-  const projectNumber = String(projects.indexOf(project) + 1).padStart(2, "0");
-
-  const meta = [
-    { label: "Konum", value: project.location },
-    { label: "Yıl", value: String(project.year) },
-    { label: "Alan", value: formatArea(project.area) },
-    { label: "Kategori", value: categoryLabels[project.category] },
-    { label: "Disiplin", value: project.discipline },
-    { label: "Durum", value: statusLabels[project.status] },
-    ...(project.client ? [{ label: "İşveren", value: project.client }] : []),
-  ];
+  const ld = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: project.title,
+    description: project.description,
+    image: absoluteUrl(imgPath(project.cover.src)),
+    creator: { '@type': 'Organization', name: site.name },
+    about: project.category,
+  };
 
   return (
-    <article>
-      <header data-theme="dark" className="relative isolate flex min-h-[88svh] flex-col overflow-hidden">
-        <div className="animate-settle absolute inset-0 -z-20">
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
+      <Breadcrumb
+        items={[
+          { name: 'Ana sayfa', path: '/' },
+          { name: 'Projeler', path: '/projeler' },
+          { name: project.title, path: `/projeler/${project.slug}` },
+        ]}
+      />
+
+      <article className="pb-0">
+        <header className="wrap pb-10 pt-8">
+          <p className="num">{project.number}</p>
+          <p className="cat">
+            {project.category}
+            {project.secondaryCategory ? ` · ${project.secondaryCategory}` : ''}
+          </p>
+          <h1 className="mt-4 max-w-[16ch] font-[family-name:var(--font-display)] text-[clamp(2.5rem,8vw,6.5rem)] font-bold uppercase leading-[0.95] tracking-[-0.04em]">
+            {project.title}
+          </h1>
+          <p className="mt-6 max-w-2xl text-lg text-[var(--ink-2)]">{project.description}</p>
+          <dl className="mt-8 flex flex-wrap gap-8 text-sm">
+            {project.verified.location && project.location ? (
+              <div>
+                <dt className="cat">Konum</dt>
+                <dd className="mt-2">{project.location}</dd>
+              </div>
+            ) : null}
+            {project.verified.year && project.year ? (
+              <div>
+                <dt className="cat">Yıl</dt>
+                <dd className="mt-2">{project.year}</dd>
+              </div>
+            ) : null}
+          </dl>
+        </header>
+
+        <div className="relative aspect-[16/9] w-full overflow-hidden md:aspect-[21/9]">
           <Image
-            src={project.coverImage.src}
-            alt={project.coverImage.alt}
+            src={imgPath(project.cover.src)}
+            alt={project.cover.alt}
             fill
-            preload
-            quality={70}
+            priority
             sizes="100vw"
             className="object-cover"
           />
         </div>
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(18_28_40/0.5)_0%,rgb(18_28_40/0.15)_40%,rgb(18_28_40/0.8)_100%)]"
-        />
-        <div className="container-arch flex flex-1 flex-col justify-end pb-10 pt-[calc(var(--header-h)+2rem)]">
-          <nav aria-label="Sayfa yolu" className="animate-fade mb-auto pt-6" style={delay(300)}>
-            <ol className="t-label flex gap-3 text-paper/70">
-              <li>
-                <Link href="/projeler" className="link-line">
-                  Projeler
-                </Link>
-              </li>
-              <li aria-hidden>/</li>
-              <li aria-current="page" className="text-paper">
-                {projectNumber}
-              </li>
-            </ol>
-          </nav>
-          <p className="animate-fade t-label t-num text-paper/70" style={delay(100)}>
-            {projectNumber} — {categoryLabels[project.category]}
-          </p>
-          <h1 className="t-display mt-4">
-            <span className="mask-line">
-              <span className="animate-rise" style={delay(150)}>
-                {project.title.toLocaleUpperCase("tr-TR")}
-              </span>
-            </span>
-          </h1>
-        </div>
-      </header>
 
-      <section data-theme="light" aria-label="Proje bilgileri">
-        <div className="container-arch section-y-sm">
-          <dl className="grid grid-cols-2 border-t border-border sm:grid-cols-3 lg:grid-cols-6">
-            {meta.map((item, index) => (
-              <div key={item.label} className="border-b border-border py-5 pr-4">
-                <dt className="t-label flex gap-2 text-muted">
-                  <span className="t-num">{String(index + 1).padStart(2, "0")}</span>
-                  {item.label}
-                </dt>
-                <dd className="t-meta mt-2 text-[0.9375rem]">{item.value}</dd>
-              </div>
-            ))}
-          </dl>
-
-          <div className="grid-arch mt-16 gap-y-10 md:mt-24">
-            <Reveal className="col-span-4 md:col-span-5">
-              <p className="t-h3">{project.summary}</p>
+        <div className="wrap grid gap-6 py-16 md:grid-cols-12">
+          {project.gallery.map((shot, i) => (
+            <Reveal
+              as="figure"
+              mode="mask"
+              key={shot.src}
+              className={`relative overflow-hidden ${
+                i === 0
+                  ? 'aspect-[4/5] md:col-span-7'
+                  : i === 1
+                    ? 'aspect-[4/5] md:col-span-5 md:mt-16'
+                    : 'aspect-[3/2] md:col-span-6'
+              }`}
+            >
+              <Image
+                src={imgPath(shot.src)}
+                alt={shot.alt}
+                fill
+                sizes="(max-width:768px) 100vw, 50vw"
+                className="object-cover"
+              />
             </Reveal>
-            <Reveal className="col-span-4 space-y-5 text-foreground/80 md:col-span-5 md:col-start-8" delay={0.1}>
-              {project.description.map((paragraph) => (
-                <p key={paragraph.slice(0, 32)}>{paragraph}</p>
+          ))}
+        </div>
+
+        <section className="wrap grid gap-12 border-t border-[var(--stone)] py-20 md:grid-cols-2">
+          <div>
+            <p className="eyebrow">Tasarım yaklaşımı</p>
+            <ul className="space-y-5 text-[var(--ink-2)]">
+              {project.approach.map((item) => (
+                <li key={item}>{item}</li>
               ))}
-              {project.isPlaceholder ? (
-                <p className="t-label border-t border-border pt-4 text-muted">
-                  Temsili içerik — gerçek proje bilgileri ve fotoğrafları eklendiğinde güncellenecektir.
-                </p>
-              ) : null}
-            </Reveal>
+            </ul>
           </div>
-        </div>
-      </section>
+          <div>
+            <p className="eyebrow">Malzeme izleri</p>
+            <ul className="flex flex-wrap gap-3">
+              {project.materials.map((m) => (
+                <li key={m} className="border border-[var(--stone)] px-4 py-2 text-sm">
+                  {m}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
 
-      <section data-theme="light" aria-label="Proje galerisi" className="pb-[var(--section-y)]">
-        <ProjectGallery blocks={project.gallery} />
-      </section>
-
-      <section data-theme="dark" aria-label="Sonraki proje">
-        <Link href={`/projeler/${next.slug}`} className="group block">
-          <div className="container-arch section-y-sm">
-            <div className="grid-arch items-end gap-y-8">
-              <div className="col-span-4 md:col-span-7">
-                <p className="t-label text-muted">Sonraki proje</p>
-                <p className="t-h1 mt-6 flex items-center gap-6">
-                  <span className="link-line">{next.title}</span>
-                  <ArrowRight
-                    aria-hidden
-                    className="arrow-nudge-right size-[0.6em] shrink-0"
-                    strokeWidth={1}
-                  />
-                </p>
-                <p className="t-label mt-5 text-muted">
-                  {categoryLabels[next.category]} / {next.location} / <span className="t-num">{next.year}</span>
-                </p>
-              </div>
-              <div className="col-span-4 md:col-span-4 md:col-start-9">
-                <ArchImage image={next.coverImage} ratio="3 / 2" sizes="(min-width: 768px) 33vw, 100vw" interactive />
-              </div>
+        {next ? (
+          <Link
+            href={`/projeler/${next.slug}`}
+            className="group relative flex min-h-[50vh] items-end overflow-hidden bg-[var(--black)] px-[var(--gut)] py-16 text-[var(--white)]"
+            data-theme="dark"
+            data-cursor
+          >
+            <Image
+              src={imgPath(next.cover.src)}
+              alt={`${next.title} proje kapak görseli`}
+              fill
+              sizes="100vw"
+              className="object-cover opacity-40 transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="relative z-[1]">
+              <p className="eyebrow">Sonraki proje</p>
+              <Reveal as="p" mode="lines" className="h2">
+                <LineSplit lines={[next.title.toLocaleUpperCase('tr-TR')]} />
+              </Reveal>
+              <span className="link mt-6 inline-flex border-white/40">İncele →</span>
             </div>
-          </div>
-        </Link>
-      </section>
-
-      <JsonLd
-        data={breadcrumbSchema([
-          { name: "Ana Sayfa", path: "/" },
-          { name: "Projeler", path: "/projeler" },
-          { name: project.title, path: `/projeler/${project.slug}` },
-        ])}
-      />
-    </article>
+          </Link>
+        ) : null}
+      </article>
+      <InternalLinks />
+    </>
   );
 }
